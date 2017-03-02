@@ -14,9 +14,17 @@ public class Main {
 		
 		System.out.println("\nintVariable - " + intVariable);
 		System.out.println("doubleVariable - " + doubleVariable);
-		System.out.println("floatVariable - " + floatVariable);
-	}
+		System.out.println("floatVariable - " + floatVariable + "\n");
+		
+		int size = intVariable;
+		int array[] = new int[size];
+		
+		for(int i = 0; i < size; i++) {
+			array[i] = i + 1;
+			System.out.println(array[i]);
+		}
+	
+		
 
 }
-
-
+}
