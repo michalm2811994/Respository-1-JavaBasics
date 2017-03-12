@@ -10,7 +10,7 @@ public class ClientArray {
 	private int number;
 	protected double accountBalance;
 	private static int accountNumberCounter = 1;
-	private int accountNumber;
+	protected int accountNumber;
 
 	public ClientArray() {
 		addDetails();

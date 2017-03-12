@@ -1,9 +1,11 @@
 package pl.math.uni.lodz.java;
 
+
+
 import java.util.List;
 import java.util.ArrayList;
 
-public class BankArray implements OperationsArray{
+public class BankArray {
 
 	private String name;
 	private String city;
@@ -12,12 +14,18 @@ public class BankArray implements OperationsArray{
 	private String street;
 	private int number;
 	public List<ClientArray> clientList;
-
-	public BankArray() {
+	public List<Transaction> transactionHistory;
+	private static BankArray instance = new BankArray();
+	private BankArray() {
 		addDetails();
 		clientList = new ArrayList<ClientArray>();
+		transactionHistory = new ArrayList<Transaction>();
 	}
 
+	public static BankArray getInstance() {
+		return instance;
+	}
+	
 	public void addDetails() {
 		name = "GTAccount SA";
 		city = "Warsaw";
@@ -39,36 +47,44 @@ public class BankArray implements OperationsArray{
 			clientList.get(i).showDetails();
 		}
 	}
+	Transaction newTransaction;
 
-	public void transfer(ClientArray from, ClientArray to, double amount) {
-		if (from.accountBalance > amount) {
-			from.accountBalance -= amount;
-			to.accountBalance += amount;
-		} else
-			System.out.println("\nYour account does not have sufficient funds\n");
+	public void check(ClientArray sender, double amount) {
+
+		newTransaction.transType = TransactionType.type.check;
+		newTransaction = new Transaction(sender, amount);
+		if (sender.accountBalance > amount) {
+			newTransaction.status = true;
+		} else {
+			newTransaction.status = false;
+		}
+		transactionHistory.add(newTransaction);
 	}
 
-	public void doTransaction() {
-
+	public void deposit(ClientArray sender, double amount) {
+		newTransaction = new Transaction(sender, amount);
+		newTransaction.transType = TransactionType.type.deposit;
+		newTransaction.status = true;	
+		this.transactionHistory.add(newTransaction);	
 	}
 
-	public void stopTransaction() {
-
+	public void transfer(ClientArray sender, ClientArray reciver, double amount) {
+		newTransaction = new Transaction(sender, reciver, amount);
+		newTransaction.transType = TransactionType.type.transfer;
+		if (sender.accountBalance > amount && sender.accountNumber != reciver.accountNumber) {
+			newTransaction.status = true;
+		} else {
+			newTransaction.status = false;
+		}
+		transactionHistory.add(newTransaction);
 	}
+	
+	public void showHistory() {
 
-	public void deleteTransaction() {
-
+		for (int i = 0; i < transactionHistory.size(); i++) {
+			transactionHistory.get(i).showTransaction();
+		}
 	}
-
-	public void check(ClientArray from, double amount) {
-		if (from.accountBalance > amount) {
-			from.accountBalance -= amount;
-		} else
-			System.out.println("\nYour account does not have sufficient funds\n");
-	}
-
-	public void deposit(ClientArray from, double amount) {
-		from.accountBalance += amount;
-	}
+	
 	
 }
