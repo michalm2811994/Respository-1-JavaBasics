@@ -1,6 +1,10 @@
 package pl.math.uni.lodz.java;
 
+import java.util.List;
+
 public class ClientArray {
+	
+	public static List<ClientArray> clientList;
 	private String firstName;
 	private String lastName;
 	private String city;
@@ -11,6 +15,7 @@ public class ClientArray {
 	protected double accountBalance;
 	private static int accountNumberCounter = 1;
 	protected int accountNumber;
+	
 
 	public ClientArray() {
 		addDetails();

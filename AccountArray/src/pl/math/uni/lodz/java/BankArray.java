@@ -13,13 +13,11 @@ public class BankArray {
 	private String zip;
 	private String street;
 	private int number;
-	public List<ClientArray> clientList;
-	public List<Transaction> transactionHistory;
 	private static BankArray instance = new BankArray();
 	private BankArray() {
 		addDetails();
-		clientList = new ArrayList<ClientArray>();
-		transactionHistory = new ArrayList<Transaction>();
+		ClientArray.clientList = new ArrayList<ClientArray>();
+		Transaction.transactionHistory = new ArrayList<Transaction>();
 	}
 
 	public static BankArray getInstance() {
@@ -37,52 +35,21 @@ public class BankArray {
 
 	public void showDetails() {
 		System.out.println("\nBank Name - " + name);
-		System.out.println("Registered clients - " + clientList.size());
+		System.out.println("Registered clients - " + ClientArray.clientList.size());
 		System.out.println("Address - " + city + " " + zip + " " + state + ", " + street + " " + number + "\n");
 	}
 
-	public void showClientList() {
+	static public void showClientList() {
 
-		for (int i = 0; i < clientList.size(); i++) {
-			clientList.get(i).showDetails();
+		for (int i = 0; i < ClientArray.clientList.size(); i++) {
+			ClientArray.clientList.get(i).showDetails();
 		}
 	}
-	Transaction newTransaction;
 
-	public void check(ClientArray sender, double amount) {
+	static public void showHistory() {
 
-		newTransaction.transType = TransactionType.type.check;
-		newTransaction = new Transaction(sender, amount);
-		if (sender.accountBalance > amount) {
-			newTransaction.status = true;
-		} else {
-			newTransaction.status = false;
-		}
-		transactionHistory.add(newTransaction);
-	}
-
-	public void deposit(ClientArray sender, double amount) {
-		newTransaction = new Transaction(sender, amount);
-		newTransaction.transType = TransactionType.type.deposit;
-		newTransaction.status = true;	
-		this.transactionHistory.add(newTransaction);	
-	}
-
-	public void transfer(ClientArray sender, ClientArray reciver, double amount) {
-		newTransaction = new Transaction(sender, reciver, amount);
-		newTransaction.transType = TransactionType.type.transfer;
-		if (sender.accountBalance > amount && sender.accountNumber != reciver.accountNumber) {
-			newTransaction.status = true;
-		} else {
-			newTransaction.status = false;
-		}
-		transactionHistory.add(newTransaction);
-	}
-	
-	public void showHistory() {
-
-		for (int i = 0; i < transactionHistory.size(); i++) {
-			transactionHistory.get(i).showTransaction();
+		for (int i = 0; i < Transaction.transactionHistory.size(); i++) {
+			Transaction.transactionHistory.get(i).showTransaction();
 		}
 	}
 	

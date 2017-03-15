@@ -1,56 +1,55 @@
 package pl.math.uni.lodz.java;
 
-
+import java.util.List;
 
 public class Transaction {
 
+	public static List<Transaction> transactionHistory;
 	protected int senderAccountNumber;
 	protected int receiverAccountNumber;
 	protected TransactionType.type transType;
 	protected double amount;
 	protected boolean status;
+	protected double accountBalance;
+	protected String swift = "";
 	
-
-	protected Transaction(ClientArray sender, ClientArray reciver, double amount) {
-		this.senderAccountNumber = sender.accountNumber;
-		this.receiverAccountNumber = reciver.accountNumber;
-		this.amount = amount;
-	}
-
-	protected Transaction(ClientArray sender, double amount) {
-		this.senderAccountNumber = sender.accountNumber;
-		this.receiverAccountNumber = 0;
-		this.amount = amount;
-	}
-
-	public void doTransaction() {
-
-	}
-
-	public void stopTransaction() {
-
-	}
-
-	public void deleteTransaction() {
-
-	}
-
+	
 	public void showTransaction() {
-		System.out.println("\nTransaction type - " + transType);
-		System.out.println("Sender account - " + senderAccountNumber);
+		System.out.println("\nTransaction type - " + this.transType);
+		System.out.println("Sender account - " + this.senderAccountNumber);
 		if(receiverAccountNumber > 0) {
-		System.out.println("Reciver account - " + receiverAccountNumber);
+		System.out.println("Reciever account - " + this.receiverAccountNumber + " " + swift);
 		}
-		System.out.println("Amount - " + amount);
+		System.out.println("Amount - " + this.amount);
 		if(status) {
 			System.out.println("Status - Succeed");
 		} else {
 			System.out.println("Status - Failed");
 		}
 	}
+
 	
+	public void doTransaction() { }
+	
+	public void stopTransaction() { }
+	
+	public static void deleteTransaction(int transactionIndex) { 
+		if(transactionHistory.get(transactionIndex).status == false) {
+			transactionHistory.remove(transactionIndex);
+	}
+	}
+
+	static public void checkList() {
+		
+		for(int i = 0; i < transactionHistory.size(); i++)	{
+				deleteTransaction(i);
+			}
+		}
+		
+	}
 
 
 	
 	
-}
+	
+
