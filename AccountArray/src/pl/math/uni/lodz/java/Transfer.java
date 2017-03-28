@@ -1,28 +1,44 @@
 package pl.math.uni.lodz.java;
 
 public class Transfer extends Transaction {
-	
 
-	
-	public Transfer(ClientArray sender,ClientArray receiver, double amount, String swift) {
-		this.senderAccountNumber = sender.accountNumber;
-		this.receiverAccountNumber = receiver.accountNumber;
-		this.transType = TransactionType.type.check;
+	public Transfer(int senderAcountNumber, int receiverAccountNumber, double amount, String swift) {
+		if (ifInternal(senderAcountNumber) == true) {
+			this.senderAccountNumber = accountSearch(senderAcountNumber).accountNumber;
+		} else {
+			this.senderAccountNumber = senderAcountNumber;
+		}
+
+		if (ifInternal(receiverAccountNumber) == true) {
+			this.receiverAccountNumber = accountSearch(receiverAccountNumber).accountNumber;
+		} else {
+			this.receiverAccountNumber = receiverAccountNumber;
+		}
+
+		this.transType = "Transfer";
 		this.amount = amount;
-		this.accountBalance = sender.accountBalance;
 		this.swift = swift;
+
 	}
-	
+
 	@Override
 	public void doTransaction() {
-		this.transType = TransactionType.type.transfer;
-		if (this.accountBalance > amount && this.senderAccountNumber != this.receiverAccountNumber) {
+		if (this.accountSearch(this.senderAccountNumber).accountBalance >= this.amount
+				&& ifInternal(this.senderAccountNumber) == true
+				&& this.senderAccountNumber != this.receiverAccountNumber) {
 			this.status = true;
 		} else {
 			this.status = false;
 		}
-
+		Transaction.transactionHistory.add(this);
 	}
 
+	@Override
+	public void finishTransaction() {
+		this.accountSearch(this.senderAccountNumber).accountBalance -= this.amount;
+		if (ifInternal(this.senderAccountNumber) == true) {
+			this.accountSearch(this.receiverAccountNumber).accountBalance += this.amount;
+		}
+	}
 
 }

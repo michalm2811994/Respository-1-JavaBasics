@@ -1,11 +1,9 @@
 package pl.math.uni.lodz.java;
 
-
-
 import java.util.List;
 import java.util.ArrayList;
 
-public class BankArray {
+public class Bank {
 
 	private String name;
 	private String city;
@@ -13,17 +11,19 @@ public class BankArray {
 	private String zip;
 	private String street;
 	private int number;
-	private static BankArray instance = new BankArray();
-	private BankArray() {
+	private static Bank instance = new Bank();
+
+	private Bank() {
 		addDetails();
-		ClientArray.clientList = new ArrayList<ClientArray>();
+		Client.clientList = new ArrayList<Client>();
 		Transaction.transactionHistory = new ArrayList<Transaction>();
+
 	}
 
-	public static BankArray getInstance() {
+	public static Bank getInstance() {
 		return instance;
 	}
-	
+
 	public void addDetails() {
 		name = "GTAccount SA";
 		city = "Warsaw";
@@ -35,14 +35,14 @@ public class BankArray {
 
 	public void showDetails() {
 		System.out.println("\nBank Name - " + name);
-		System.out.println("Registered clients - " + ClientArray.clientList.size());
-		System.out.println("Address - " + city + " " + zip + " " + state + ", " + street + " " + number + "\n");
+		System.out.println("Registered clients - " + Client.clientList.size());
+		System.out.println("Address - " + city + " " + zip + " " + state + ", " + street + " " + number + "\n\n");
 	}
 
 	static public void showClientList() {
 
-		for (int i = 0; i < ClientArray.clientList.size(); i++) {
-			ClientArray.clientList.get(i).showDetails();
+		for (int i = 0; i < Client.clientList.size(); i++) {
+			Client.clientList.get(i).showDetails();
 		}
 	}
 
@@ -52,6 +52,5 @@ public class BankArray {
 			Transaction.transactionHistory.get(i).showTransaction();
 		}
 	}
-	
-	
+
 }

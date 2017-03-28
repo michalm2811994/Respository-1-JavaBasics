@@ -3,34 +3,31 @@ package pl.math.uni.lodz.java;
 public class Main {
 
 	public static void main(String[] args) {
-		BankArray gtAccount = BankArray.getInstance();
-		ClientArray client1 = new ClientArray();
-		ClientArray client2 = new ClientArray();
-		ClientArray client3 = new ClientArray();
-		
-		ClientArray.clientList.add(client1);
-		ClientArray.clientList.add(client2);
-		ClientArray.clientList.add(client3);
-		
-		gtAccount.showDetails();
-		
+
+		Bank gtAccount = Bank.getInstance();
+		Client newAccount;
 		Transaction operation;
 
-		operation = new Deposit(client1,2500);
+		newAccount = new PersonalAccount();
+
+		newAccount = new BusinessAccount();
+
+		newAccount = new PersonalAccount();
+
+		operation = new Deposit(1, 1340);
 		operation.doTransaction();
-		Transaction.transactionHistory.add(operation);
-		
-		operation = new Check(client3,101111111.99);
+
+		operation = new Check(1, 3, 150);
 		operation.doTransaction();
-		Transaction.transactionHistory.add(operation);
-		
-		operation = new Transfer(client1, client2, 760, "PLWDV");
+
+		operation = new Transfer(2, 1, 2500, "PLGTA");
 		operation.doTransaction();
-		Transaction.transactionHistory.add(operation);
-		
-		Transaction.checkList();
-		
-		BankArray.showHistory();
+
+		Transaction.closeSession();
+		Bank.showHistory();
+
+		Bank.showClientList();
+
 	}
 
 }
